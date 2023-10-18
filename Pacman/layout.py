@@ -41,9 +41,10 @@ class Layout:
     def getNumGhosts(self):
         return self.numGhosts
 
-    def initializeVisibilityMatrix(self):
-        global VISIBILITY_MATRIX_CACHE
-        if reduce(str.__add__, self.layoutText) not in VISIBILITY_MATRIX_CACHE:
+    def initializeVisibilityMatrix(self): #e o functie
+        global VISIBILITY_MATRIX_CACHE  #It is used to make changes in the global variable in a local context. 
+                                        #The keyword 'Global' is also used to create or declare a global variable inside a function
+        if reduce(str.__add__, self.layoutText) not in VISIBILITY_MATRIX_CACHE: 
             from game import Directions
             vecs = [(-0.5,0), (0.5,0),(0,-0.5),(0,0.5)]
             dirs = [Directions.NORTH, Directions.SOUTH, Directions.WEST, Directions.EAST]
