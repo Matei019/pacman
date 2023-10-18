@@ -76,33 +76,33 @@ class Configuration:
     horizontally and y increases vertically.  Therefore, north is the direction of increasing y, or (0,1).
     """
 
-    def __init__(self, pos, direction):
+    def __init__(self, pos, direction):#initializeaza pozitia si directia unui personaj
         self.pos = pos
         self.direction = direction
 
-    def getPosition(self):
+    def getPosition(self):#returneaza pozitia curenta a personajului
         return (self.pos)
 
-    def getDirection(self):
+    def getDirection(self):#returneaza directia in care se uita personajul(nord, sud, est, vest)
         return self.direction
 
-    def isInteger(self):
+    def isInteger(self):#verifica daca personajul are pozitiile x si y numere intregi (idk de ce)
         x,y = self.pos
         return x == int(x) and y == int(y)
 
-    def __eq__(self, other):
-        if other == None: return False
+    def __eq__(self, other):#verifica daca 2 personaje sunt la aceeasi pozitie (acelasi x si y) si sunt orientate in aceeasi directie(nord, sud, est, vest)
+        if other == None: return False #daca nu se afla un personaj pe poztia lui "self"(pacman cred)
         return (self.pos == other.pos and self.direction == other.direction)
 
-    def __hash__(self):
+    def __hash__(self):#returneaza codul de hash al personajului
         x = hash(self.pos)
         y = hash(self.direction)
         return hash(x + 13 * y)
 
-    def __str__(self):
+    def __str__(self):#returneaza pozitia si directia personajului sub forma unui string
         return "(x,y)="+str(self.pos)+", "+str(self.direction)
 
-    def generateChild(self, vector):
+    def generateChild(self, vector):#idk
         """
         Generates a new configuration reached by translating the current
         configuration by the action vector.  This is a low-level call and does
