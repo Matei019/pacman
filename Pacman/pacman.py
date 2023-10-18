@@ -124,32 +124,32 @@ class GameState:
         GameState.explored.add(state)
         return state
 
-    def getLegalPacmanActions( self ):
-        return self.getLegalActions( 0 )
+    def getLegalPacmanActions( self ):   #Scopul metodei este sa furnizeze actiunile legale disponibile pentru personajul Pac-Man cu indexul 0 
+        return self.getLegalActions( 0 )  #folosim aceasta metoda pentru a obtine actiunile legale. Apelam cu argumentul 0 pentru a specifica ca dorim sa obtinem actiunile legale pentru Pac-Man la indexul 0. Rezultatul metodei va fi o lista de actiuni
 
-    def generatePacmanChild( self, action ):
+    def generatePacmanChild( self, action ):   #metoda care genereaza starea copil rezultata dintr-o actiune specificata a lui Pac-Man
         """
         Generates the child state after the specified pacman move
         """
-        return self.generateChild( 0, action )
+        return self.generateChild( 0, action ) #apelam metoda mai generala cu indexul jucatorului 0 si actiunea specificata ca argumente
 
-    def getPacmanState( self ):
+    def getPacmanState( self ):  #metoda are scopul de a furniza o copie a obiectului AgentState care reprezinta starea personajului Pac-Man
         """
         Returns an AgentState object for pacman (in game.py)
 
         state.pos gives the current position
         state.direction gives the travel vector
         """
-        return self.data.agentStates[0].copy()
+        return self.data.agentStates[0].copy()  #AgentState contine informatii despre starea curenta a lui Pac-Man, cum ar fi pozitia sa (state.pos) și directia sa de deplasare (state.direction)
 
-    def getPacmanPosition( self ):
-        return self.data.agentStates[0].getPosition()
+    def getPacmanPosition( self ):  #furnizeaza pozitia curenta a personajului
+        return self.data.agentStates[0].getPosition()  #metoda acceseaza obiectul agentStates din obiectul self.data si apoi foloseste metoda getPosition() pentru a obtine pozitia personajului Pac-Man (indexul 0) din acest obiect
 
     def getGhostStates( self ):
-        return self.data.agentStates[1:]
+        return self.data.agentStates[1:]  #metoda acceseaza obiectul agentStates din obiectul self.data si returneaza o lista care contine starile tuturor fantomelor din joc
 
     def getGhostState( self, agentIndex ):
-        if agentIndex == 0 or agentIndex >= self.getNumAgents():
+        if agentIndex == 0 or agentIndex >= self.getNumAgents(): #Prin intermediul argumentului agentIndex, se specifica indexul (pozitia) unei anumite fantome in joc
             raise Exception("Invalid index passed to getGhostState")
         return self.data.agentStates[agentIndex]
 
