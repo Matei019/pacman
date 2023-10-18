@@ -54,11 +54,7 @@ class Directions:      # Clasa directions reprezinta directiile in care se depla
     STOP = 'Stop'      # Directia STOP arata oprirea
 
 
-<<<<<<< HEAD
     # Se declara un dictionar care reprezinta miscarea Pacmanului spre stanga
-=======
-    RIGHT =      dict([(y,x) for x, y in LEFT.items()]) #acelasi lucru ca mai sus dar ca s-a folosit o functie mai interesanta pentru a mapa aceste lucruri
->>>>>>> cc1e7a8451a4f39f4d8f9573ff16669628e098f9
 
     LEFT =       {NORTH: WEST,       # Daca merge spre Nord si o ia catre Vest deplasarea e spre stanga
                    SOUTH: EAST,      # Daca merge catre Sud si schimba directia spre Est deplasarea e spre stanga
