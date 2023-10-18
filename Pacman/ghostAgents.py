@@ -19,25 +19,35 @@ import random
 from util import manhattanDistance
 import util
 
+#se defineste relatia copil-parinte. GhostAgent mosteneste din clasa Agent 
+
 class GhostAgent( Agent ):
+    #se defineste constructorul clasei 
     def __init__( self, index ):
         self.index = index
 
+    #se defineste metoda "getAction" care trebuie sa returneze urmatoarea actiune care va avea loc
     def getAction( self, state ):
         dist = self.getDistribution(state)
         if len(dist) == 0:
             return Directions.STOP
         else:
             return util.chooseFromDistribution( dist )
-
+    
+    #o alta metoda definita , de data aceasta abstracta 
     def getDistribution(self, state):
         "Returns a Counter encoding a distribution over actions from the provided state."
         util.raiseNotDefined()
-
+#se defineste o clasa , care mosteneste deja "GhostAgent"
 class RandomGhost( GhostAgent ):
     "A ghost that chooses a legal action uniformly at random."
+    #cum s-a definit metoda abstracta in parinte , de data aceasta se si implementeaza in copil
+    #self se refera la instanta clasei 
     def getDistribution( self, state ):
+        #se creaza un obiect de tipul Counter folosind functia util.Counter()
         dist = util.Counter()
+        #similar cu java , se implementeaza un for care sa parcurga toate instantele din state , instante care sunt self.index
+        #se instatiaza fiecare probabilitate cu 1.0 prin dist[a]=1.0
         for a in state.getLegalActions( self.index ): dist[a] = 1.0
         dist.normalize()
         return dist
