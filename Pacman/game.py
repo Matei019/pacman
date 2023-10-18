@@ -46,22 +46,22 @@ class Agent:
         """
         raiseNotDefined()
 
-class Directions:
-    NORTH = 'North'
+class Directions: #clasa care configureaza directiile generale ce se regasesc in joc
+    NORTH = 'North' #creaza variabilele ce reprezinta punctele cardinale/directiile din joc
     SOUTH = 'South'
     EAST = 'East'
     WEST = 'West'
     STOP = 'Stop'
 
-    LEFT =       {NORTH: WEST,
+    LEFT =       {NORTH: WEST,  #care punct cardinal este la stanga celui curent (ex: daca pacman se misca NORTH atunci stanga este WEST etc)
                    SOUTH: EAST,
                    EAST:  NORTH,
                    WEST:  SOUTH,
                    STOP:  STOP}
 
-    RIGHT =      dict([(y,x) for x, y in LEFT.items()])
+    RIGHT =      dict([(y,x) for x, y in LEFT.items()]) #acelasi lucru ca mai sus dar ca s-a folosit o functie mai interesanta pentru a mapa aceste lucruri
 
-    REVERSE = {NORTH: SOUTH,
+    REVERSE = {NORTH: SOUTH, #care punct cardinal reprezinta opusul celui curent
                SOUTH: NORTH,
                EAST: WEST,
                WEST: EAST,
@@ -299,7 +299,7 @@ class Actions:
 
     TOLERANCE = .001
 
-    def reverseDirection(action):
+    def reverseDirection(action):  #functie pentru a inversa directia in care se misca pacman
         if action == Directions.NORTH:
             return Directions.SOUTH
         if action == Directions.SOUTH:
@@ -309,8 +309,8 @@ class Actions:
         if action == Directions.WEST:
             return Directions.EAST
         return action
-    reverseDirection = staticmethod(reverseDirection)
-
+    reverseDirection = staticmethod(reverseDirection) #staticmethod e o functie care tine de clasa din care se afla, nu de obiectele individuale
+                                                      #aici se seteaza noua directie prin apelul functiei statice(cred)
     def vectorToDirection(vector):
         dx, dy = vector
         if dy > 0:
