@@ -72,31 +72,31 @@ class GameState:
     ####################################################
 
     # static variable keeps track of which states have had getLegalActions called
-    explored = set()
-    def getAndResetExplored():
-        tmp = GameState.explored.copy()
-        GameState.explored = set()
-        return tmp
-    getAndResetExplored = staticmethod(getAndResetExplored)
+    explored = set() #initializeaza un set nou
+    def getAndResetExplored(): #defineste o noua functie fara argumente care sa reseteze setul 
+        tmp = GameState.explored.copy() #face o copie a setului pentru a putea reveni la ea
+        GameState.explored = set() #dupa ce am creat copia revine la setul gol
+        return tmp #returneaza copia facuta inainte de a fi resetata functia
+    getAndResetExplored = staticmethod(getAndResetExplored) #face functia sa fie statica
 
     def getLegalActions( self, agentIndex=0 ):
         """
         Returns the legal actions for the agent specified.
         """
 #        GameState.explored.add(self)
-        if self.isWin() or self.isLose(): return []
+        if self.isWin() or self.isLose(): return [] #verifica daca jocul s a castigat sau s a pierdut, adica daca a ajuns la final 
 
-        if agentIndex == 0:  # Pacman is moving
-            return PacmanRules.getLegalActions( self )
-        else:
-            return GhostRules.getLegalActions( self, agentIndex )
+        if agentIndex == 0:  # Pacman is moving   
+            return PacmanRules.getLegalActions( self ) #in functie de agentIndex daca e pacman cheama functie pt pacman
+        else:#altfel 
+            return GhostRules.getLegalActions( self, agentIndex ) # e chemata functia pentru fantoma
 
     def generateChild( self, agentIndex, action):
         """
         Returns the child state after the specified agent takes the action.
         """
         # Check that children exist
-        if self.isWin() or self.isLose(): raise Exception('Can\'t generate a child of a terminal state.')
+        if self.isWin() or self.isLose(): raise Exception('Can\'t generate a child of a terminal state.') #verifica daca s a ajuns la final
 
         # Copy current state
         state = GameState(self)
