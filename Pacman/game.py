@@ -46,26 +46,38 @@ class Agent:
         """
         raiseNotDefined()
 
-class Directions: #clasa care configureaza directiile generale ce se regasesc in joc
-    NORTH = 'North' #creaza variabilele ce reprezinta punctele cardinale/directiile din joc
-    SOUTH = 'South'
-    EAST = 'East'
-    WEST = 'West'
-    STOP = 'Stop'
+class Directions:      # Clasa directions reprezinta directiile in care se deplaseaza pacmanul
+    NORTH = 'North'    # Directia NORTH este pentru a merge in sus
+    SOUTH = 'South'    # Directia SOUTH este pentru a merge in jos
+    EAST = 'East'      # Directia EAST este pentru a merge spre dreapta
+    WEST = 'West'      # Directia WEST este pentru a merge spre stanga
+    STOP = 'Stop'      # Directia STOP arata oprirea
 
-    LEFT =       {NORTH: WEST,  #care punct cardinal este la stanga celui curent (ex: daca pacman se misca NORTH atunci stanga este WEST etc)
-                   SOUTH: EAST,
-                   EAST:  NORTH,
-                   WEST:  SOUTH,
-                   STOP:  STOP}
 
+<<<<<<< HEAD
+    # Se declara un dictionar care reprezinta miscarea Pacmanului spre stanga
+=======
     RIGHT =      dict([(y,x) for x, y in LEFT.items()]) #acelasi lucru ca mai sus dar ca s-a folosit o functie mai interesanta pentru a mapa aceste lucruri
+>>>>>>> cc1e7a8451a4f39f4d8f9573ff16669628e098f9
 
-    REVERSE = {NORTH: SOUTH, #care punct cardinal reprezinta opusul celui curent
-               SOUTH: NORTH,
-               EAST: WEST,
-               WEST: EAST,
-               STOP: STOP}
+    LEFT =       {NORTH: WEST,       # Daca merge spre Nord si o ia catre Vest deplasarea e spre stanga
+                   SOUTH: EAST,      # Daca merge catre Sud si schimba directia spre Est deplasarea e spre stanga
+                   EAST:  NORTH,     # Daca merge catre Est si schimba directia catre Nord atunci o ia tot la stanga
+                   WEST:  SOUTH,     # Din vest catre sud e la fel
+                   STOP:  STOP}     # Stop reprezinta momentul in care pacmanul e oprit
+
+
+    # Se declara un dictionar care reprezinta miscarile pacmanului spre dreapta
+
+    RIGHT =      dict([(y,x) for x, y in LEFT.items()])  # se inverseaza elementele din dictionarul LEFT pentru a forma miscarea spre dreapta
+
+    # Se creaza un dictionar REVERSE care reprezinta miscarile opuse ale Pacmanului
+
+    REVERSE = {NORTH: SOUTH,   # Daca o ia spre nord atunci opusul este sudul
+               SOUTH: NORTH,   # Daca o ia catre Sud atunci opusul este nordul
+               EAST: WEST,     # Daca o ia catre est atunci opusul este vestul 
+               WEST: EAST,     # Daca o ia catre vest atunci opusul este estul
+               STOP: STOP}    # Stop reprezinta la fel starea in care pacmanul e oprit (nu se misca)
 
 class Configuration:
     """
@@ -76,17 +88,17 @@ class Configuration:
     horizontally and y increases vertically.  Therefore, north is the direction of increasing y, or (0,1).
     """
 
-    def __init__(self, pos, direction):#initializeaza pozitia si directia unui personaj
-        self.pos = pos
-        self.direction = direction
+    def __init__(self, pos, direction):  # se declara o functie _init_ cu scopul de a initializa pozitia pacmanului
+        self.pos = pos   # pacmanul primeste pos pentru pozitie
+        self.direction = direction #pacmanul primeste o anumita directie
 
-    def getPosition(self):#returneaza pozitia curenta a personajului
-        return (self.pos)
+    def getPosition(self):  # metoda getPosition are scopul de a returna pozitia pacmanului
+        return (self.pos) # clauza return ofera pozitia
 
-    def getDirection(self):#returneaza directia in care se uita personajul(nord, sud, est, vest)
-        return self.direction
+    def getDirection(self):   # metoda getDirection are scopul de a return directia pacmanului
+        return self.direction #clauza return ofera directia
 
-    def isInteger(self):#verifica daca personajul are pozitiile x si y numere intregi (idk de ce)
+    def isInteger(self):   
         x,y = self.pos
         return x == int(x) and y == int(y)
 
