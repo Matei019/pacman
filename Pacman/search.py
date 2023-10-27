@@ -114,6 +114,30 @@ def depthFirstSearch(problem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
+
+    search_nodes = util.Stack()  ## folosim o stiva pentru a stoca nodurile de cautat
+    visited_nodes = set()   ## folosim un set pentru a stoca nodurile vizitate
+
+    # Push the start state along with an empty list of actions
+    search_nodes.push((problem.getStartState(), []))   ### punem pe stiva punctul de start si o lista care sa tina istoricul
+
+    while not search_nodes.isEmpty():    ### cat timp stiva nu este goala
+        state, actions = search_nodes.pop()   ### punem in state starea curenta si in actions lista istoricului actiunilor
+
+        if problem.isGoalState(state):  ### daca am ajuns la tinta noastra, returnam lista de actiuni
+            return actions
+
+        if state not in visited_nodes:
+            visited_nodes.add(state)   ### daca starea curenta nu a mai fost vizitata, o adaugam in setul cu vizitate
+
+            # Use problem.expand to get successors
+            successors = problem.expand(state) ### bagam in successors setul child, action, stepCost
+            for successor, action, stepCost in successors:
+                new_actions = actions + [action]   ### se adauga actiunile viitoare
+                search_nodes.push((successor, new_actions))
+
+    return []
+
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem): 
