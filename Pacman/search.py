@@ -155,7 +155,42 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    
+     searchNodes = util.PriorityQueue() #stocam nodurile intr-o coada de prioritati
+    visitedNodes = set() #stocam nodurile vizitate intr-un set
+
+    startNode = problem.getStartState() #extragem starea de inceput din "problem" (coordonatele x si y ale pozitiei de inceput din graf)
+    startHeuristic = heuristic(startNode, problem) #calculam euristica primului nod fata de finish(nodul la care trebuie sa ajungem)
+
+    searchNodes.push((startNode, [], 0), startHeuristic) #punem in coada de prioritati nodul de inceput, impreuna cu o lista goala si costul pana la el,
+                                                         #iar ca al doilea parametru punem euristica aleasa
+    solution = [] # creeam o lista goala in care vom stoca directiile ce vor rezulta la solutia finala(directii = N, S, E, V; in care va trebui sa mearga pacman)
+
+    while not searchNodes.isEmpty(): #cat timp coada de noduri nu este goala vom extrage cate un element pe rand
+        currentNode, solution, cost = searchNodes.pop() #salvam in "currentNode" coordonatele nodului nou extras din "searchNodes", in "solution" lista curenta de noduri care duc
+                                                        #la solutie, iar in "cost" costul pana la acel nod (dar nu il vom folosim)
+        if problem.isGoalState(currentNode): #verificam daca "currentNode" este nodul la care dorim sa ajungem(in cazul nostru fructul la care trebuie sa mearga pacman)
+            return solution #daca am ajuns la fruct(nodul la care dorim sa ajungem), atunci returnam "solution"(lista ce contine nodurile prin care trebuie sa trecem)
+        
+        #daca "currentNode" nu este nodul la care dorim sa ajungem, atunci va continua executia programului aici
+        if currentNode not in visitedNodes: #verificam daca nu am mai trecut prin "currentNode" la un moment anterior(daca nu se afla in "visitedNode")
+            visitedNodes.add(currentNode) #daca nu am trecut inca prin el, il marcam ca si vizitat si continuam operatiile necesare asupra lui
+
+            for coordinates, direction, nextCost in problem.expand(currentNode): #parcurgem toti vecinii nodului curent, extragand coordonatele("coordinates"), directia lui
+                                                                                 #("direction") si costul pana la el("nextCost", pe care nu il vom folosi)
+                if coordinates not in visitedNodes: #daca nu am mai trecut prin acest vecin inainte, atunci putem lucra cu el 
+                    actionsList = list(solution) #"actionList" salveaza lista curenta "solution" ce contine directiile curente ce formeaza solutia finala
+                    actionsList += [direction] #iar aici adaugam la lista noua directie descoperita
+
+                    actionsCost = problem.getCostOfActionSequence(actionsList) #salvam in "actionsCost" costul total obtinut pana acum de "actionList"(costul curent de la nodul
+                                                                               #de start pana la nodul "coordinates")
+                    heuristicProblem = heuristic(coordinates, problem) #calculam euristica nodului "coordinates" fata de finish(nodul la care trebuie sa ajungem)
+
+                    searchNodes.push((coordinates, actionsList, 1), (actionsCost + heuristicProblem)) #adaugam la coada de prioritati nodul "coordinates", "actionList"
+                                                                                                      #(lista ce contine solutia curenta), si costul 1(euristica, costul este 1),
+                                                                                                      #iar ca al doilea parametru suma dintre costul curent si euristica nou calculata
+
+    return [] #in cazul in care nu avem noduri in coada de prioritati sau nu se poate gasi o solutie la problema, atunci vom returna o lista goala
 
 
 # Abbreviations
