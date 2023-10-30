@@ -143,7 +143,24 @@ def depthFirstSearch(problem):
 def breadthFirstSearch(problem): 
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    search_nodes = util.Queue()  ## folosim o coada pentru a stoca nodurile de cautat
+    visited_nodes = set()   ## folosim un set pentru a stoca nodurile vizitate
+
+    # Push the start state along with an empty list of actions
+    search_nodes.push((problem.getStartState(), []))   ### punem in coada punctul de start si o lista care sa tina istoricul
+
+    while not search_nodes.isEmpty():    ### cat timp coada nu este goala
+        state, actions = search_nodes.pop()   ### punem in state starea curenta si in actions lista istoricului actiunilor
+        visited_nodes.add(state)   ### adaugam starea in setul cu vizitate
+        if problem.isGoalState(state):  ### daca am ajuns la tinta noastra, returnam lista de actiuni
+            return actions
+
+            # Use problem.expand to get successors
+        successors = problem.expand(state) ### bagam in successors setul child, action, stepCost
+        for successor, action, _ in successors:#nu ne intereseaza stepCost deci putem folosi _ , pt a arata ca nu vom utiliza respectivul atribut
+                if successor not in visited_nodes and all(successor != node[0] for node in search_nodes.list):#verificam daca succesorul gasit nu se afla nici in visited_nodes si nici in search_nodes
+                    search_nodes.push((successor, actions + [action]))  # Add the successor to search_nodes with its path , asta decat daca conditia de sus e respectata
+                
 
 def nullHeuristic(state, problem=None):
     """
@@ -156,7 +173,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
     
-     searchNodes = util.PriorityQueue() #stocam nodurile intr-o coada de prioritati
+    searchNodes = util.PriorityQueue() #stocam nodurile intr-o coada de prioritati
     visitedNodes = set() #stocam nodurile vizitate intr-un set
 
     startNode = problem.getStartState() #extragem starea de inceput din "problem" (coordonatele x si y ale pozitiei de inceput din graf)
